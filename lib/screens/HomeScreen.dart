@@ -1,9 +1,10 @@
 import 'dart:ui';
 import "package:flutter/material.dart";
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:sticky_headers/sticky_headers.dart';
+import 'package:todo_sophisticated/components/ButtonCommon.dart';
 import 'package:todo_sophisticated/components/SingleGrid.dart';
 import 'package:todo_sophisticated/model/ListImg.dart';
+import 'package:todo_sophisticated/utils/AppRoutes.dart';
 import 'package:todo_sophisticated/utils/ColorsConstants.dart';
 
 class HomeScreen extends HookWidget {
@@ -30,13 +31,19 @@ class HomeScreen extends HookWidget {
     ListImg(id: 15, img: "assets/img/working.png", title: "Working"),
   ];
 
-  final listHeader = ["HEADER1"];
-
   @override
   Widget build(BuildContext context) {
     var itensSelected = useState(List<ListImg>.empty());
+
     handleNavigation() {
-      print("ola");
+      var snackBar = itensSelected.value.isEmpty
+          ? const SnackBar(content: Text("You need selected at least one item"))
+          : null;
+      if (snackBar != null) {
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        return;
+      }
+      Navigator.of(context).pushNamed(AppRoutes.details);
     }
 
     handleSelectItem(ListImg item) {
@@ -58,11 +65,11 @@ class HomeScreen extends HookWidget {
         body: Stack(
           children: [
             ListView.builder(
-                itemCount: listHeader.length,
+                itemCount: 1,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: EdgeInsets.only(
-                      top: statusBarTopHeight,
+                      top: 20,
                       left: 20,
                       right: 20,
                       bottom: statusBarBottonHeight + 150,
@@ -120,26 +127,10 @@ class HomeScreen extends HookWidget {
                 width: MediaQuery.of(context).size.width,
                 bottom: MediaQuery.of(context).size.height * 0.1,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: 0,
-                      horizontal: MediaQuery.of(context).size.width * 0.22),
-                  child: ElevatedButton(
-                    onPressed: handleNavigation,
-                    style: ElevatedButton.styleFrom(
-                        elevation: 13,
-                        backgroundColor: ColorsConstants.secondaryColor,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 20)),
-                    child: const Text(
-                      "Get Start",
-                      style: TextStyle(
-                        color: ColorsConstants.whiteColor,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 17,
-                      ),
-                    ),
-                  ),
-                ))
+                    padding: EdgeInsets.symmetric(
+                        vertical: 0,
+                        horizontal: MediaQuery.of(context).size.width * 0.22),
+                    child: ButtonCommon(() => handleNavigation())))
           ],
         ));
   }
