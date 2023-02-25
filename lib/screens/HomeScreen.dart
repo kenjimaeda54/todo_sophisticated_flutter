@@ -41,78 +41,56 @@ class HomeScreen extends HookWidget {
         body: ListView.builder(
             itemCount: listHeader.length,
             itemBuilder: (context, index) {
-              return StickyHeader(
-                  header: Container(
-                      padding: EdgeInsets.only(
-                        top: statusBarHeight + 15,
-                        bottom: 0,
-                      ),
-                      child: Column(
-                        children: const [
-                          Text(
-                            "Chosse Activity",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: ColorsConstants.secondaryColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 12,
-                          ),
-                          Text(
-                            "You can chosse more than one",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: ColorsConstants.blue50,
-                                fontSize: 17,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          SizedBox(
-                            height: 19,
-                          ),
-                          Divider(
-                            thickness: 2,
-                            indent: 19,
-                            color: ColorsConstants.whiteColor100,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      )),
-                  content: Stack(children: [
-                    GridView.builder(
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: statusBarHeight + 5, horizontal: 20),
+                child: Column(
+                  children: [
+                    const Text(
+                      "Chosse Activity",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: ColorsConstants.secondaryColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    const Text(
+                      "You can chosse more than one",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: ColorsConstants.blue50,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(
+                      height: 19,
+                    ),
+                    const Divider(
+                      thickness: 2,
+                      indent: 19,
+                      color: ColorsConstants.whiteColor100,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    GridView.count(
                         shrinkWrap: true,
-                        padding: const EdgeInsets.all(10),
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: listImg.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3),
-                        itemBuilder: (BuildContext context, index) {
-                          var title = listImg[index].title;
-                          var img = listImg[index].img;
-                          return SingleGrid(title: title, image: img);
-                        }),
-                    Positioned(
-                        width: MediaQuery.of(context).size.width,
-                        bottom: MediaQuery.of(context).size.height * 0.1,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 0,
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.15),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                elevation: 25,
-                                backgroundColor: ColorsConstants.secondaryColor,
-                                padding: const EdgeInsets.all(15)),
-                            onPressed: handleNavigation,
-                            child: Text("Get Start"),
-                          ),
-                        ))
-                  ]));
+                        physics: const ScrollPhysics(),
+                        crossAxisCount: 3,
+                        mainAxisSpacing: 50,
+                        crossAxisSpacing: 5,
+                        children: listImg
+                            .map((it) => SingleGrid(
+                                  image: it.img,
+                                  title: it.title,
+                                ))
+                            .toList())
+                  ],
+                ),
+              );
             }));
   }
 }
