@@ -43,7 +43,8 @@ class HomeScreen extends HookWidget {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         return;
       }
-      Navigator.of(context).pushNamed(AppRoutes.details);
+      Navigator.of(context)
+          .pushNamed(AppRoutes.details, arguments: itensSelected.value);
     }
 
     handleSelectItem(ListImg item) {
