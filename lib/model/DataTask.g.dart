@@ -11,16 +11,15 @@ class DataTask extends _DataTask
   DataTask(
     ObjectId id,
     String description,
-    String date,
-    String hour, {
-    Iterable<int> idListImg = const [],
-  }) {
+    DateTime dateTime,
+    int idListImg,
+    String colors,
+  ) {
     RealmObjectBase.set(this, 'id', id);
     RealmObjectBase.set(this, 'description', description);
-    RealmObjectBase.set(this, 'date', date);
-    RealmObjectBase.set(this, 'hour', hour);
-    RealmObjectBase.set<RealmList<int>>(
-        this, 'idListImg', RealmList<int>(idListImg));
+    RealmObjectBase.set(this, 'dateTime', dateTime);
+    RealmObjectBase.set(this, 'idListImg', idListImg);
+    RealmObjectBase.set(this, 'colors', colors);
   }
 
   DataTask._();
@@ -38,21 +37,20 @@ class DataTask extends _DataTask
       RealmObjectBase.set(this, 'description', value);
 
   @override
-  String get date => RealmObjectBase.get<String>(this, 'date') as String;
+  DateTime get dateTime =>
+      RealmObjectBase.get<DateTime>(this, 'dateTime') as DateTime;
   @override
-  set date(String value) => RealmObjectBase.set(this, 'date', value);
+  set dateTime(DateTime value) => RealmObjectBase.set(this, 'dateTime', value);
 
   @override
-  String get hour => RealmObjectBase.get<String>(this, 'hour') as String;
+  int get idListImg => RealmObjectBase.get<int>(this, 'idListImg') as int;
   @override
-  set hour(String value) => RealmObjectBase.set(this, 'hour', value);
+  set idListImg(int value) => RealmObjectBase.set(this, 'idListImg', value);
 
   @override
-  RealmList<int> get idListImg =>
-      RealmObjectBase.get<int>(this, 'idListImg') as RealmList<int>;
+  String get colors => RealmObjectBase.get<String>(this, 'colors') as String;
   @override
-  set idListImg(covariant RealmList<int> value) =>
-      throw RealmUnsupportedSetError();
+  set colors(String value) => RealmObjectBase.set(this, 'colors', value);
 
   @override
   Stream<RealmObjectChanges<DataTask>> get changes =>
@@ -68,10 +66,9 @@ class DataTask extends _DataTask
     return const SchemaObject(ObjectType.realmObject, DataTask, 'DataTask', [
       SchemaProperty('id', RealmPropertyType.objectid, primaryKey: true),
       SchemaProperty('description', RealmPropertyType.string),
-      SchemaProperty('date', RealmPropertyType.string),
-      SchemaProperty('hour', RealmPropertyType.string),
-      SchemaProperty('idListImg', RealmPropertyType.int,
-          collectionType: RealmCollectionType.list),
+      SchemaProperty('dateTime', RealmPropertyType.timestamp),
+      SchemaProperty('idListImg', RealmPropertyType.int),
+      SchemaProperty('colors', RealmPropertyType.string),
     ]);
   }
 }

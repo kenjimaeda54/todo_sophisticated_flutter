@@ -6,12 +6,12 @@ import '../model/ListImg.dart';
 class SingleGrid extends HookWidget {
   late final ListImg listImg;
   late Function(ListImg item) handleSelectedItem;
-  List<ListImg> istenSelected;
+  ListImg? itensSelected;
 
   SingleGrid(
       {Key? key,
       required this.listImg,
-      required this.istenSelected,
+      required this.itensSelected,
       required this.handleSelectedItem})
       : super(key: key);
 
@@ -29,7 +29,7 @@ class SingleGrid extends HookWidget {
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: istenSelected.contains(listImg)
+                color: itensSelected?.id == listImg.id
                     ? ColorsConstants.blue100
                     : ColorsConstants.whiteColor,
                 width: 1,

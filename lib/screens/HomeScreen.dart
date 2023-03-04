@@ -7,42 +7,27 @@ import 'package:todo_sophisticated/model/ListImg.dart';
 import 'package:todo_sophisticated/utils/AppRoutes.dart';
 import 'package:todo_sophisticated/utils/ColorsConstants.dart';
 
+import '../mock/listIdImg.dart';
+
 class HomeScreen extends HookWidget {
   HomeScreen({Key? key}) : super(key: key);
   final statusBarTopHeight = window.viewPadding.top;
   final statusBarBottonHeight = window.viewPadding.bottom;
   List<ListImg> listItemsSelected = [];
 
-  final List<ListImg> listImg = [
-    ListImg(id: 1, img: "assets/img/bike.png", title: "Cycling"),
-    ListImg(id: 2, img: "assets/img/book.png", title: "Reading"),
-    ListImg(id: 3, img: "assets/img/clock.png", title: "Alert"),
-    ListImg(id: 4, img: "assets/img/party.png", title: "Party"),
-    ListImg(id: 5, img: "assets/img/gaming.png", title: "Gaming"),
-    ListImg(id: 6, img: "assets/img/music.png", title: "Play Guitar"),
-    ListImg(id: 7, img: "assets/img/romance.png", title: "Loving"),
-    ListImg(id: 8, img: "assets/img/run.png", title: "Jogging"),
-    ListImg(id: 9, img: "assets/img/shopping.png", title: "Shopping"),
-    ListImg(id: 10, img: "assets/img/writer.png", title: "Writing"),
-    ListImg(id: 11, img: "assets/img/water.png", title: "Drink"),
-    ListImg(id: 12, img: "assets/img/skate.png", title: "Skating"),
-    ListImg(id: 13, img: "assets/img/trading.png", title: "Trading"),
-    ListImg(id: 14, img: "assets/img/paiting.png", title: "Painting"),
-    ListImg(id: 15, img: "assets/img/working.png", title: "Working"),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    var itensSelected = useState(List<ListImg>.empty());
+    var itensSelected = useState<ListImg?>(null);
 
     handleNavigation() {
-      var snackBar = itensSelected.value.isEmpty
+      var snackBar = itensSelected.value == null
           ? const SnackBar(content: Text("You need selected at least one item"))
           : null;
       if (snackBar != null) {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         return;
       }
+
       Navigator.of(context)
           .pushNamed(AppRoutes.details, arguments: itensSelected.value);
     }
@@ -54,11 +39,12 @@ class HomeScreen extends HookWidget {
       // exemplo em    em redux , pois  não podemos altera  uma lista que esta no redux diretamente,precisa manipular ela
       // e igualar ao valor do estate
       // state.data = data.fitler(it => it.id === item.id) // isso e em redux
-      itensSelected.value.contains(item)
-          ? itensSelected.value = itensSelected.value
-              .where((element) => element.id != item.id)
-              .toList()
-          : itensSelected.value = [...itensSelected.value, item];
+      // itensSelected.value.contains(item)
+      //     ? itensSelected.value = itensSelected.value
+      //         .where((element) => element.id != item.id)
+      //         .toList()
+      //     : itensSelected.value = [...itensSelected.value, item];
+      itensSelected.value = item;
     }
 
     return Scaffold(
@@ -116,7 +102,7 @@ class HomeScreen extends HookWidget {
                             children: listImg
                                 .map((it) => SingleGrid(
                                       listImg: it,
-                                      istenSelected: itensSelected.value,
+                                      itensSelected: itensSelected.value,
                                       handleSelectedItem: handleSelectItem,
                                     ))
                                 .toList())

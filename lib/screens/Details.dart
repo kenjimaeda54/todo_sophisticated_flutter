@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -18,12 +20,9 @@ class Details extends HookWidget {
     var quantityLetter = useState(0);
     var monthSelect =
         useState<String>(DateFormat.MMMMd().format(DateTime.now()));
-    var dateSelect = useState<String>(DateTime.now().toString());
-    var hourSelect = useState<String>(
-        "${DateTime.now().hour}-${DateTime.now().minute}-${DateTime.now().second}");
-    final arguments =
-        ModalRoute.of(context)?.settings.arguments as List<ListImg>;
-    var argumentsRoute = useState(arguments);
+    var dateSelect = useState<DateTime>(DateTime.now());
+    final arguments = ModalRoute.of(context)?.settings.arguments as ListImg;
+    var argumentsRoute = useState<ListImg>(arguments);
     final controllerText = useTextEditingController();
     final updateInput = useValueListenable(controllerText);
 
@@ -40,23 +39,30 @@ class Details extends HookWidget {
         ScaffoldMessenger.of(contextScaffold).showSnackBar(snackBar);
         return;
       }
-      final List<int> idListImg =
-          argumentsRoute.value.map((e) => e.id).toList();
-      var dataTask = DataTask(
-          ObjectId(), updateInput.text, dateSelect.value, hourSelect.value,
-          idListImg: idListImg);
+      controllerText.text = "";
+      List<MaterialAccentColor> listColors = [
+        Colors.cyanAccent,
+        Colors.lightGreenAccent,
+        Colors.limeAccent,
+        Colors.pinkAccent,
+        Colors.indigoAccent,
+        Colors.amberAccent,
+        Colors.purpleAccent,
+        Colors.greenAccent
+      ];
+
+      var sortColor = Random().nextInt(8);
+      var dataTask = DataTask(ObjectId(), updateInput.text, dateSelect.value,
+          argumentsRoute.value.id, listColors[sortColor].toString());
       realm.write(() => realm.add(dataTask));
       Navigator.of(context)
           .pushNamed(AppRoutes.show); // esse contexto precisa ser da rota
     }
 
     handleSumbitDatePicker(DateTime value) {
-      final splitDate = "${value.year}-${value.month}-${value.day}";
-      final splitHour = "${value.hour}-${value.minute}-${value.second}";
       var formatDate = DateFormat.MMMMd().format(value);
       monthSelect.value = formatDate;
-      dateSelect.value = splitDate;
-      hourSelect.value = splitHour;
+      dateSelect.value = value;
     }
 
     handleShowCalendar() {

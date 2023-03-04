@@ -7,4 +7,5 @@ class ColorsConstants {
   static const whiteColor100 = Color.fromRGBO(222, 231, 242, 1);
   static const blue50 = Color.fromRGBO(161, 169, 176, 1);
   static const blue100 = Color.fromRGBO(152, 218, 211, 1);
+  static const black = Color.fromRGBO(0, 0, 0, 0.9);
 }
