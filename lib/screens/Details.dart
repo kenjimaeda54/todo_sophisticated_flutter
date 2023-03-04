@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:realm/realm.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:todo_sophisticated/components/ButtonCommon.dart';
 import 'package:todo_sophisticated/model/DataTask.dart';
 import 'package:todo_sophisticated/model/ListImg.dart';
@@ -17,9 +16,11 @@ class Details extends HookWidget {
   @override
   Widget build(BuildContext context) {
     var quantityLetter = useState(0);
-    var monthSelect = useState(DateFormat.MMMMd().format(DateTime.now()));
-    var dateSelect = useState("");
-    var hourSelect = useState("");
+    var monthSelect =
+        useState<String>(DateFormat.MMMMd().format(DateTime.now()));
+    var dateSelect = useState<String>(DateTime.now().toString());
+    var hourSelect = useState<String>(
+        "${DateTime.now().hour}-${DateTime.now().minute}-${DateTime.now().second}");
     final arguments =
         ModalRoute.of(context)?.settings.arguments as List<ListImg>;
     var argumentsRoute = useState(arguments);

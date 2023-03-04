@@ -34,7 +34,6 @@ dependencies:
   flutter_hooks: ^0.18.6
   flutter_localizations:
     sdk: flutter
-  syncfusion_flutter_datepicker: 20.4.44
   syncfusion_flutter_calendar:  20.4.44
   realm: ^1.0.2
   intl:  0.17.0

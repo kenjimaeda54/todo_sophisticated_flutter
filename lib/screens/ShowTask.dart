@@ -70,6 +70,8 @@ class ShowTask extends HookWidget {
       }
     }, []);
 
+    handleBackNavigation(BuildContext context) => Navigator.pop(context);
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(
@@ -80,11 +82,13 @@ class ShowTask extends HookWidget {
         child: Column(
           children: [
             ListTile(
-              leading: const Icon(
-                Icons.arrow_back,
-                size: 20,
-                color: ColorsConstants.secondaryColor,
-              ),
+              leading: IconButton(
+                  onPressed: () => handleBackNavigation(context),
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    size: 20,
+                    color: ColorsConstants.secondaryColor,
+                  )),
               title: Text(
                 monthCurrenty ?? "",
                 textAlign: TextAlign.center,
