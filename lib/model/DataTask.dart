@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:realm/realm.dart';
 part 'DataTask.g.dart'; // nome do arquivo
 
@@ -7,7 +6,7 @@ class _DataTask {
   @PrimaryKey()
   late final ObjectId id;
   late String description;
-  late DateTime dateTime;
+  late String dateTime;
   late int idListImg;
   late String colors;
 }

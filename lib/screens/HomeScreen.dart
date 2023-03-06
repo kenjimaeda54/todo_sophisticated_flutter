@@ -6,20 +6,19 @@ import 'package:todo_sophisticated/components/SingleGrid.dart';
 import 'package:todo_sophisticated/model/ListImg.dart';
 import 'package:todo_sophisticated/utils/AppRoutes.dart';
 import 'package:todo_sophisticated/utils/ColorsConstants.dart';
-
 import '../mock/listIdImg.dart';
+import '../model/DataTask.dart';
 
 class HomeScreen extends HookWidget {
   HomeScreen({Key? key}) : super(key: key);
   final statusBarTopHeight = window.viewPadding.top;
   final statusBarBottonHeight = window.viewPadding.bottom;
-  List<ListImg> listItemsSelected = [];
 
   @override
   Widget build(BuildContext context) {
     var itensSelected = useState<ListImg?>(null);
 
-    handleNavigation() {
+    handleNavigationScreenDetails() {
       var snackBar = itensSelected.value == null
           ? const SnackBar(content: Text("You need selected at least one item"))
           : null;
@@ -27,9 +26,8 @@ class HomeScreen extends HookWidget {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         return;
       }
-
-      Navigator.of(context)
-          .pushNamed(AppRoutes.details, arguments: itensSelected.value);
+      Navigator.of(context).pushReplacementNamed(AppRoutes.details,
+          arguments: itensSelected.value);
     }
 
     handleSelectItem(ListImg item) {
@@ -45,6 +43,17 @@ class HomeScreen extends HookWidget {
       //         .toList()
       //     : itensSelected.value = [...itensSelected.value, item];
       itensSelected.value = item;
+    }
+
+    handleNavigationShowActivies() {
+      var snackBar = realm.all<DataTask>().isEmpty
+          ? const SnackBar(content: Text("You have no activies"))
+          : null;
+      if (snackBar != null) {
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        return;
+      }
+      Navigator.of(context).pushReplacementNamed(AppRoutes.show);
     }
 
     return Scaffold(
@@ -74,13 +83,16 @@ class HomeScreen extends HookWidget {
                         const SizedBox(
                           height: 12,
                         ),
-                        const Text(
-                          "You can chosse more than one",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: ColorsConstants.blue50,
-                              fontSize: 17,
-                              fontWeight: FontWeight.w400),
+                        TextButton(
+                          onPressed: () => handleNavigationShowActivies(),
+                          child: const Text(
+                            "Click  here to see your activities",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: ColorsConstants.blue50,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w400),
+                          ),
                         ),
                         const SizedBox(
                           height: 19,
@@ -117,7 +129,7 @@ class HomeScreen extends HookWidget {
                     padding: EdgeInsets.symmetric(
                         vertical: 0,
                         horizontal: MediaQuery.of(context).size.width * 0.22),
-                    child: ButtonCommon(() => handleNavigation())))
+                    child: ButtonCommon(() => handleNavigationScreenDetails())))
           ],
         ));
   }

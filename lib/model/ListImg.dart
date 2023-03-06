@@ -1,5 +1,3 @@
-import 'package:realm/realm.dart';
-
 class ListImg {
   final int id;
   final String img;

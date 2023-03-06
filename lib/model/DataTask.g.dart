@@ -11,7 +11,7 @@ class DataTask extends _DataTask
   DataTask(
     ObjectId id,
     String description,
-    DateTime dateTime,
+    String dateTime,
     int idListImg,
     String colors,
   ) {
@@ -37,10 +37,10 @@ class DataTask extends _DataTask
       RealmObjectBase.set(this, 'description', value);
 
   @override
-  DateTime get dateTime =>
-      RealmObjectBase.get<DateTime>(this, 'dateTime') as DateTime;
+  String get dateTime =>
+      RealmObjectBase.get<String>(this, 'dateTime') as String;
   @override
-  set dateTime(DateTime value) => RealmObjectBase.set(this, 'dateTime', value);
+  set dateTime(String value) => RealmObjectBase.set(this, 'dateTime', value);
 
   @override
   int get idListImg => RealmObjectBase.get<int>(this, 'idListImg') as int;
@@ -66,7 +66,7 @@ class DataTask extends _DataTask
     return const SchemaObject(ObjectType.realmObject, DataTask, 'DataTask', [
       SchemaProperty('id', RealmPropertyType.objectid, primaryKey: true),
       SchemaProperty('description', RealmPropertyType.string),
-      SchemaProperty('dateTime', RealmPropertyType.timestamp),
+      SchemaProperty('dateTime', RealmPropertyType.string),
       SchemaProperty('idListImg', RealmPropertyType.int),
       SchemaProperty('colors', RealmPropertyType.string),
     ]);

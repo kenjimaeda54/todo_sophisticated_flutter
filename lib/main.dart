@@ -3,8 +3,6 @@ import 'package:todo_sophisticated/screens/Details.dart';
 import 'package:todo_sophisticated/screens/ShowTask.dart';
 import 'package:todo_sophisticated/utils/AppRoutes.dart';
 import 'package:todo_sophisticated/screens/HomeScreen.dart';
-import 'package:todo_sophisticated/utils/AppRoutes.dart';
-import 'package:todo_sophisticated/utils/ColorsConstants.dart';
 
 void main() {
   runApp(const MyApp());
