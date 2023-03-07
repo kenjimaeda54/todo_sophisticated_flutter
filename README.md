@@ -209,7 +209,7 @@ listColors[sortColor].toString()
 - Se deseja limpar o input a cada certo evento pode usar o controllerText
 
 
-```flutter
+```dart
 final controllerText = useTextEditingController();
 final updateInput = useValueListenable(controllerText);
 
