@@ -34,7 +34,7 @@ handleShowCalendar() {
 - Repara que para atualizar o item selecionado precisei igualar com o operador de igual = 
 - Tem um exemplo clássico no redux *** state.data = data.fitler(it => it.id === item.id)   ** quando preciso atualizar uma lista
 
-```flutter
+```dart
 var itensSelected = useState<ListImg[]>(null);
 
 
